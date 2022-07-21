@@ -1,32 +1,38 @@
 #include "pch.h"
 
 #include <Windows.h>
-#include "tfcond.h"
-#include "intrin.h"
+#include <format>
 
 #pragma comment (lib, "detours.lib")
 #include "detours.h"
 
+#include "tfcond.h"
+#include "intrin.h"
 
 using namespace std;
 
 
-auto InCondOffset = 0x4c17d0;
-auto WearableDrawOffset = 0x3227f0;
-auto PlayerShouldDrawOffset = 0x409db0;
+DWORD InCondOffset = 0x4c17d0;
+DWORD WearableDrawOffset = 0x3227f0;
+DWORD PlayerShouldDrawOffset = 0x409db0;
 
 
-typedef bool(__fastcall* tInCond) (void* ths, ETFCond cond);
+typedef bool(__thiscall* tInCond) (void* ths, ETFCond cond);
 tInCond oInCond;
 
 bool __fastcall hInCond(void* ecx, void* edx, ETFCond cond) {
 
 	//auto caller = _ReturnAddress();
-
+	//if (caller == (base + WearableDrawOffset) { return false; }
+	//if (caller == (base + PlayerShouldDrawOffset) { return false; }
+	//return Function(ecx, cond);
+	MessageBox(NULL, "Hooked Function!", "Sniper POV", MB_SYSTEMMODAL);
 	return false;
 
-	//return Function(ecx, cond);
+
 }
+
+
 
 DWORD WINAPI entry(LPVOID lpparam)
 {
@@ -35,16 +41,28 @@ DWORD WINAPI entry(LPVOID lpparam)
 	//Function = (oFunction)(sig);
 
 
-	auto base = GetModuleHandleA("client.dll");
+	auto base = GetModuleHandle("client.dll");
 
 	oInCond = (tInCond)((DWORD)base + InCondOffset);
 
-
 	DetourTransactionBegin();
-	DetourAttach(&(PBOOL&) oInCond, hInCond);
+	DetourUpdateThread(GetCurrentThread());
+	auto error = DetourAttach(&(PVOID&)oInCond, hInCond);
 	DetourTransactionCommit();
 
+
+	if (error != NO_ERROR) {
+		MessageBox(NULL, "Failed to hook!", "Sniper POV", MB_SYSTEMMODAL);
+		return -1;
+	}
+
 	return 3133;
+}
+
+void do_entry_thread(HINSTANCE hinstdll) {
+	// https://docs.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-best-practices
+	DisableThreadLibraryCalls(hinstdll);
+	CreateThread(nullptr, 0, entry, hinstdll, 0, nullptr);
 }
 
 BOOL WINAPI DllMain(
@@ -54,13 +72,12 @@ BOOL WINAPI DllMain(
 {
 	switch (fdwreason) {
 	case DLL_PROCESS_ATTACH:
-		DisableThreadLibraryCalls(hinstdll);
-		CreateThread(nullptr, 0, entry, hinstdll, 0, nullptr);
-		return TRUE;
+		do_entry_thread(hinstdll);
+		return true;
 	case DLL_PROCESS_DETACH:
 		FreeLibraryAndExitThread(hinstdll, 0);
-		return TRUE;
+		return true;
 	default:
-		return TRUE;
+		return true;
 	}
 }
