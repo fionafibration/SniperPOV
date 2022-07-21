@@ -6,7 +6,7 @@ Meant to be used alongside HLAE.
 
 Usage: 
 
-Launch TF2 and inject HLAE, either through HLAE's custom loader, or through Lawena. Then run injector.exe. 
+Launch TF2 and inject HLAE, either through HLAE's custom loader, or through Lawena. Then run injector.exe. Or your own injector.
 It will require running as admin if your TF2 is.
 
 ## DO NOT RUN WITHOUT INSECURE MODE
