@@ -1,7 +1,7 @@
 # SniperPOV
 
 
-By default, in a POV demo, TF2 makes the local sniper invisible when you scope in. This project fixes that. 
+By default, in a POV demo, TF2 makes the local sniper invisible when you scope in. This is a small loader that fixes that. 
 Meant to be used alongside HLAE.
 
 Usage: 
