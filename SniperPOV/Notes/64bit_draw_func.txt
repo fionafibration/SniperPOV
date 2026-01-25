@@ -1,0 +1,57 @@
+Instructions (1/3): Use a decompiler (like Ghidra) to decompile x64/client.dll (64bit version). Try and find the function below (do a search by Memory for the byte sequence, otherwise try and find this function pattern). If the byte sequence changed, update it in the code. Take note of the function name (eg. FUN_1805bbd90, it will be different for you!). You'll be looking for two different functions that make calls to this function. Refer to 64bit_player_draw and 64bit_wearable_draw next. Copy/Paste the latest draw_func to this txt file (if changed) and note the date for future fixers.
+
+
+draw_func decompiled function pattern:
+
+===== JANUARY 24th, 2026 =====
+Location: 48 89 5c 24 ?? 57 48 83 ec ?? 8b da 48 8b f9 83 fa 20 7d ?? 48 81 c1
+
+48 89 5c 24 08 MOV
+57 PUSH
+48 83 ec 20 SUB
+8b da MOV
+48 8b f9 MOV
+83 fa 20 CMP
+7d 24 JGE
+48 81 c1 00 01 00 00 ADD
+e8 f0 16 f4 ff CALL
+
+
+ulonglong FUN_1805bbd90(longlong param_1,uint param_2)
+
+{
+  undefined4 uVar1;
+  undefined4 extraout_var;
+  longlong lVar2;
+  
+  if ((int)param_2 < 0x20) {
+    uVar1 = FUN_1804fd4a0(param_1 + 0x100,param_2);
+    if ((char)uVar1 != '\0') {
+      return CONCAT71((int7)(CONCAT44(extraout_var,uVar1) >> 8),1);
+    }
+    lVar2 = 0xec;
+  }
+  else if ((int)param_2 < 0x80) {
+    if ((int)param_2 < 0x60) {
+      if ((int)param_2 < 0x40) {
+        param_2 = param_2 - 0x20;
+        lVar2 = 0xf0;
+      }
+      else {
+        param_2 = param_2 - 0x40;
+        lVar2 = 0xf4;
+      }
+    }
+    else {
+      param_2 = param_2 - 0x60;
+      lVar2 = 0xf8;
+    }
+  }
+  else {
+    param_2 = param_2 - 0x80;
+    lVar2 = 0xfc;
+  }
+  return (ulonglong)
+         CONCAT31((int3)(*(uint *)(lVar2 + param_1) >> 8),
+                  (*(uint *)(lVar2 + param_1) >> (param_2 & 0x1f) & 1) != 0);
+}
