@@ -62,9 +62,6 @@ uintptr_t search_pattern(const char* pattern, const char* mask)
 	return NULL;
 }
 
-//DWORD base;
-
-
 // Return addresses of the wearable and player draw functions so we can say no to sniper zoom
 uintptr_t wearable_draw;
 uintptr_t player_draw;
@@ -77,6 +74,7 @@ uintptr_t player_draw;
 tInCond oInCond;
 
 #ifdef _M_X64
+// Hooked Function
 bool __fastcall hInCond(void* ths, ETFCond cond) {
 	if (cond == TFCond_Zoomed) {
 		uintptr_t retAddr = (uintptr_t)_ReturnAddress();
@@ -88,9 +86,6 @@ bool __fastcall hInCond(void* ths, ETFCond cond) {
 }
 #else
 bool __fastcall hInCond(void* ecx, void* edx, ETFCond cond) {
-
-	//MessageBox(NULL, "Hooked Function!", "Sniper POV", MB_SYSTEMMODAL);
-
 	if (cond == TFCond_Zoomed) {
 		if ((uintptr_t)_ReturnAddress() == wearable_draw) { return false; }
 		if ((uintptr_t)_ReturnAddress() == player_draw) { return false; }
@@ -111,7 +106,7 @@ DWORD WINAPI entry(LPVOID lpparam)
 
 	uintptr_t sig;
 
-#ifdef _M_X64
+#ifdef _M_X64 // UPDATED SIGNATURES POST-JANUARY 24th 2026
 	// 64-bit signatures
 	sig = search_pattern("\x48\x89\x5C\x24?\x57\x48\x83\xEC?\x8B\xDA\x48\x8B\xF9\x83\xFA\x20\x7D?\x48\x81\xC1", "xxxx?xxxx?xxxxxxxxx?xxx");
 	// Find the CALL instructions to the incond and add 5 to get the address they will be returning to
