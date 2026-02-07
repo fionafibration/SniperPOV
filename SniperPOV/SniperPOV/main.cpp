@@ -35,7 +35,7 @@ uintptr_t search_pattern(const char* pattern, const char* mask)
 	MODULEINFO info = {};
 	auto hmod = GetModuleHandleA("client.dll");
 	if (hmod == nullptr) {
-		MessageBoxA(NULL, "client.dll not loaded yet (code error, contact dev)", "Sniper POV", MB_SYSTEMMODAL);
+		MessageBoxA(NULL, "client.dll not able to be loaded", "Sniper POV", MB_SYSTEMMODAL);
 		return NULL;
 	}
 	GetModuleInformation(GetCurrentProcess(), hmod, &info, sizeof(MODULEINFO));
@@ -77,11 +77,10 @@ tInCond oInCond;
 // Hooked Function
 bool __fastcall hInCond(void* ths, ETFCond cond) {
 	if (cond == TFCond_Zoomed) {
-		uintptr_t retAddr = (uintptr_t)_ReturnAddress();
-		if (retAddr == wearable_draw || retAddr == player_draw) {
-			return false;
-		}
+		if ((uintptr_t)_ReturnAddress() == wearable_draw) { return false; }
+		if ((uintptr_t)_ReturnAddress() == player_draw) { return false; }
 	}
+
 	return oInCond(ths, cond);
 }
 #else
@@ -100,7 +99,7 @@ DWORD WINAPI entry(LPVOID lpparam)
 {
 	// Allow client.dll to load (60000 ms / 60 s)
 	if (!WaitForClientDll(60000)) {
-		MessageBoxA(NULL, "Failed to hook!\nLoading Client.dll exceeded timeout limit (60s).\n(try again, or contact dev)", "Sniper POV", MB_SYSTEMMODAL);
+		MessageBoxA(NULL, "Failed to hook!\nLoading client.dll exceeded timeout limit (60s).\n(try again or contact dev)", "Sniper POV", MB_SYSTEMMODAL);
 		return -1;
 	}
 
@@ -141,7 +140,7 @@ DWORD WINAPI entry(LPVOID lpparam)
 
 
 	if (error != NO_ERROR) {
-		MessageBoxA(NULL, "Failed to hook!\n(unclear what went wrong, contact dev)", "Sniper POV", MB_SYSTEMMODAL);
+		MessageBoxA(NULL, "Failed to hook!\n(Detour Attach failed, contact dev)", "Sniper POV", MB_SYSTEMMODAL);
 		return -1;
 	}
 
