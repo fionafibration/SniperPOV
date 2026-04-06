@@ -105,7 +105,7 @@ DWORD WINAPI entry(LPVOID lpparam)
 
 	uintptr_t sig;
 
-#ifdef _M_X64 // UPDATED SIGNATURES POST-JANUARY 24th 2026
+#ifdef _M_X64 // UPDATED SIGNATURES POST-APRIL 6th 2026
 	// 64-bit signatures
 	sig = search_pattern("\x48\x89\x5C\x24?\x57\x48\x83\xEC?\x8B\xDA\x48\x8B\xF9\x83\xFA\x20\x7D?\x48\x81\xC1", "xxxx?xxxx?xxxxxxxxx?xxx");
 	// Find the CALL instructions to the incond and add 5 to get the address they will be returning to
@@ -113,7 +113,7 @@ DWORD WINAPI entry(LPVOID lpparam)
 	player_draw = search_pattern("\xE8????\x84\xC0\x74?\x32\xC0\x48\x8B\x74\x24", "x????xxx?xxxxxx") + 5;
 #else
 	// 32-bit signatures
-	sig = search_pattern("\x55\x8B\xEC\x83\xEC\x08\x56\x57\x8B\x7D\x08\x8B\xF1\x83\xFF\x20", "xxxxxxxxxxxxxxxx");
+	sig = search_pattern("\x55\x8B\xEC\x83\xEC?\x56\x57\x8B\x7D?\x8B\xF1\x83\xFF?", "xxxxx?xxxx?xxxx?");
 	wearable_draw = search_pattern("\xE8????\x84\xC0\x0F\x85????\x6A\x03\x8B\xCB\xE8????\x84\xC0\x0F\x84????", "x????xxxx????xxxxx????xxxx????") + 5;
 	player_draw = search_pattern("\xE8????\x84\xC0\x74?\x5E\x32\xC0\x5B\xC3", "x????xxx?xxxxx") + 5;
 #endif
