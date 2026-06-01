@@ -1,0 +1,68 @@
+Relevant depots (2022):
+https://steamdb.info/depot/441/history/?changeid=M:5716878502456269164
+
+Instructions (1/3): Use a decompiler (like Ghidra) to decompile client.dll (32bit version). Try and find the function below (do a search by Memory for the byte sequence, otherwise try and find this function pattern). If the byte sequence changed, update it in the code. Take note of the function name (eg. FUN_103f7280, it will be different for you!). You'll be looking for two different functions that make calls to this function. Refer to player_draw and wearable_draw next. Copy/Paste the latest draw_func to this txt file (if changed) and note the date for future fixers.
+
+
+draw_func decompiled function pattern:
+
+
+
+===== APRIL 2026 =====
+Location: 55 8B EC 83 EC ?? 56 57 8B 7D ?? 8B F1 83 FF ??
+(note: I suppose oct 2025 was not wildcarded correctly)
+55 PUSH
+8b ec MOV
+83 ec 0c SUB
+56 PUSH
+57 PUSH
+8b 7d 08 MOV
+8b f1 MOV
+83 ff 20 CMP
+7d 1a JGE
+57 PUSH
+8d 8e e0 00 00 00 LEA
+e8 62 0e f6 ff CALL
+84 c0 TEST
+
+
+bool __thiscall FUN_104f9d00(int param_1,int param_2)
+
+{
+  char cVar1;
+  undefined4 local_c;
+  undefined1 local_8;
+  
+  if (param_2 < 0x20) {
+    cVar1 = FUN_1045ab80(param_2);
+    if (cVar1 != '\0') {
+      return true;
+    }
+  }
+  FUN_104f2e70(*(undefined4 *)(param_1 + 0x188),param_2,param_1 + 0xcc,param_1 + 0xd0,param_1 + 0x d4
+               ,param_1 + 0xd8,param_1 + 0xdc);
+  return (*local_c & 1 << (local_8 & 0x1f)) != 0;
+}
+
+
+
+===== OCOTOBER 2025 =====
+Location (same as 2022): 55 8B EC 83 EC 08 56 57 8B 7D 08 8B F1 83 FF 20
+
+
+bool __thiscall FUN_104f7280(int param_1,int param_2)
+
+{
+  char cVar1;
+  undefined4 local_c;
+  undefined1 local_8;
+  
+  if (param_2 < 0x20) {
+    cVar1 = FUN_10458340(param_2);
+    if (cVar1 != '\0') {
+      return true;
+    }
+  }
+  FUN_104f1550(param_1 + 0xcc,param_1 + 0xd0,param_1 + 0xd4,param_1 + 0xd8,param_1 + 0xdc,param_2) ;
+  return (*local_c & 1 << (local_8 & 0x1f)) != 0;
+}

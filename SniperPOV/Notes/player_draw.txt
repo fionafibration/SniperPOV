@@ -1,0 +1,80 @@
+Instructions (2/3): Do a decompiled text search for "uint __fastcall", or something, and try to find a matching or somewhat matching function to the October 2025 function pattern at the bottom. Once found, look inside it for your corresponding draw_func function call FUN_randomString and click on FUN_randomString(1)! You will then see your new byte signature that you'll need to put into the code. It must be unique. Keep adding bytes until it's unique (search your sequence by Memory to see if only one result comes up). Ask ChatGPT how to format it (like when to add question marks instead of characters). Copy/Paste the latest player_draw to this txt file and note the date for future fixers.
+
+
+player_draw decompiled function pattern:
+
+
+
+=====OCTOBER 2025=====
+draw_func call location: e8 ?? ?? ?? ?? 84 C0 74 ?? 5E 32 C0 5B C3
+(look for FUN_104f7280(1)!)
+
+
+uint __fastcall FUN_1043eb40(int param_1)
+
+{
+  char cVar1;
+  uint uVar2;
+  int *piVar3;
+  
+  uVar2 = FUN_101d8920();
+  if ((((char)uVar2 != '\0') && (*(char *)(param_1 + 0x1758) != '\0')) &&
+     (*(char *)(param_1 + 0x1876) == '\0')) goto LAB_1043eb98;
+  piVar3 = (int *)FUN_101d7e10();
+  if (piVar3 == (int *)0x0) {
+LAB_1043eb80:
+    piVar3 = (int *)0x0;
+  }
+  else {
+    cVar1 = (**(code **)(*piVar3 + 0x210))();
+    if (cVar1 == '\0') goto LAB_1043eb80;
+  }
+  if ((int *)(param_1 + -4) == piVar3) {
+    uVar2 = FUN_104f7280(1);
+    if ((char)uVar2 != '\0') {
+LAB_1043eb98:
+      return uVar2 & 0xffffff00;
+    }
+  }
+  uVar2 = FUN_101d9aa0();
+  return uVar2;
+}
+
+
+
+
+
+
+===== JULY 2022 =====
+draw_func call location: e8 ?? ?? ?? ?? 84 C0 75 C5
+\xE8????\x84\xC0\x75\xC5
+
+uint __fastcall FUN_10407400(int param_1)
+
+{
+  char cVar1;
+  uint uVar2;
+  int *piVar3;
+  
+  uVar2 = FUN_101ad430();
+  if ((((char)uVar2 != '\0') && (*(char *)(param_1 + 0x1650) != '\0')) &&
+     (*(char *)(param_1 + 0x176e) == '\0')) goto LAB_10407421;
+  piVar3 = (int *)FUN_101aca30();
+  if (piVar3 == (int *)0x0) {
+LAB_10407441:
+    piVar3 = (int *)0x0;
+  }
+  else {
+    cVar1 = (**(code **)(*piVar3 + 0x20c))();
+    if (cVar1 == '\0') goto LAB_10407441;
+  }
+  if ((int *)(param_1 + -4) == piVar3) {
+    uVar2 = FUN_104beed0(1);
+    if ((char)uVar2 != '\0') {
+LAB_10407421:
+      return uVar2 & 0xffffff00;
+    }
+  }
+  uVar2 = FUN_101ae350();
+  return uVar2;
+}

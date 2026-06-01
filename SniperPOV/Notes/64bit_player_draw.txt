@@ -1,0 +1,54 @@
+Instructions (2/3): Do a decompiled text search for " + -8) == ", or something, and try to find a matching or somewhat matching function to the January 24th, 2026 function pattern. Once found, look inside it for your corresponding draw_func function call FUN_randomString and click on FUN_randomString(something,1)! You will then see your new byte signature that you'll need to put into the code. It must be unique. Keep adding bytes until it's unique (search your sequence by Memory to see if only one result comes up). Ask your favorite AI how to format it (like when to add question marks instead of characters). Copy/Paste the latest player_draw to this txt file and note the date for future fixers.
+
+
+
+player_draw decompiled function pattern:
+
+
+===== JANUARY 24th, 2026 =====
+draw_func call location: e8 ?? ?? ?? ?? 84 c0 74 ?? 32 c0 48 8b 74 24
+(look for FUN_1805bbd90(something,1) or in this case FUN_1805bbd90(param_1 + 0x1e80,1))
+
+e8 12 e5 0d 00 CALL
+84 c0 TEST
+74 0d JZ
+32 c0 XOR
+48 8b 74 24 38 MOV
+48 83 c4 20 ADD
+5f POP
+c3 RET
+
+
+
+ulonglong FUN_1804dd810(longlong param_1)
+
+{
+  bool bVar1;
+  char cVar2;
+  undefined7 extraout_var;
+  longlong *plVar3;
+  ulonglong uVar4;
+  
+  bVar1 = FUN_1801f5f00(param_1 + -8);
+  uVar4 = CONCAT71(extraout_var,bVar1);
+  if (((bVar1) && (*(char *)(param_1 + 0x1cb0) != '\0')) && (*(char *)(param_1 + 0x1dce) == '\0'))
+  goto LAB_1804dd882;
+  plVar3 = (longlong *)FUN_1801f50a0();
+  if (plVar3 == (longlong *)0x0) {
+LAB_1804dd861:
+    plVar3 = (longlong *)0x0;
+  }
+  else {
+    cVar2 = (**(code **)(*plVar3 + 0x420))(plVar3);
+    if (cVar2 == '\0') goto LAB_1804dd861;
+  }
+  if ((longlong *)(param_1 + -8) == plVar3) {
+    uVar4 = FUN_1805bbd90(param_1 + 0x1e80,1);
+    if ((char)uVar4 != '\0') {
+LAB_1804dd882:
+      return uVar4 & 0xffffffffffffff00;
+    }
+  }
+  uVar4 = FUN_1801f72e0(param_1);
+  return uVar4;
+}

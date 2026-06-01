@@ -1,0 +1,146 @@
+Instructions (3/3): Do a decompiled text search for "ghost_wearable", or something, and try to find a matching or somewhat matching function to the January 24th, 2026 function pattern. Once found, look inside it for your corresponding draw_func function call FUN_randomString and click on FUN_randomString(something,1)! You will then see your new byte signature that you'll need to put into the code. It must be unique. Keep adding bytes until it's unique (search your sequence by Memory to see if only one result comes up). Ask your favorite AI how to format it (like when to add question marks instead of characters). Copy/Paste the latest wearable_draw to this txt file and note the date for future fixers.
+
+
+
+wearable_draw decompiled function pattern:
+
+===== JANUARY 24th, 2026 =====
+draw_func call location: e8 ?? ?? ?? ?? 84 c0 0f 85 ?? ?? ?? ?? 41 bf 03
+(look for FUN_1805bbd90(something,1) or in this case FUN_1805bbd90((longlong)plVar13,1))
+
+
+e8 17 67 1f 00 CALL
+84 c0 TEST
+0f 85 c7 01 00 00 JNZ
+41 bf 03 00 00 00 MOV
+49 8b ce MOV
+41 8b d7 MOV
+
+
+ulonglong FUN_1803c5520(longlong param_1)
+
+{
+  uint uVar1;
+  char cVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  ulonglong uVar7;
+  longlong *plVar8;
+  undefined8 *puVar9;
+  undefined4 extraout_var;
+  ulonglong uVar10;
+  longlong *plVar11;
+  uint uVar12;
+  longlong *plVar13;
+  
+  uVar1 = *(uint *)(param_1 + 0x75c);
+  uVar12 = 0x1fff;
+  if (uVar1 == 0) {
+LAB_1803c57b8:
+    plVar11 = (longlong *)0x0;
+  }
+  else {
+    uVar3 = 0x1fff;
+    if (uVar1 != 0xffffffff) {
+      uVar3 = uVar1 & 0xffff;
+    }
+    plVar11 = (longlong *)(PTR_DAT_180fda328 + (ulonglong)uVar3 * 0x20 + 8);
+    if ((((plVar11 == (longlong *)0x0) || (*(uint *)(plVar11 + 1) != uVar1 >> 0x10)) ||
+        (plVar11 = (longlong *)*plVar11, plVar11 == (longlong *)0x0)) ||
+       (cVar2 = (**(code **)(*plVar11 + 0x420))(plVar11), cVar2 == '\0')) goto LAB_1803c57b8;
+    plVar13 = plVar11 + 0x3d1;
+    uVar7 = FUN_1805bbd90((longlong)plVar13,0x4d);
+    if ((char)uVar7 != '\0') {
+      plVar8 = (longlong *)(**(code **)(*(longlong *)(param_1 + 0xc10) + 8))();
+      if (plVar8 != (longlong *)0xffffffffffffff70) {
+        puVar9 = FUN_180392080();
+        uVar7 = FUN_1803935e0((longlong)puVar9,"ghost_wearable");
+        plVar8 = (longlong *)(**(code **)(plVar8[0x15] + 0x30))(plVar8 + 0x15);
+        uVar10 = 0;
+        iVar4 = (int)plVar8[0x4a];
+        if (0 < iVar4) {
+          while (iVar6 = (int)uVar10, *(int *)(plVar8[0x48] + uVar10 * 4) != (int)uVar7) {
+            uVar10 = (ulonglong)(iVar6 + 1U);
+            if (iVar4 <= (int)(iVar6 + 1U)) {
+              return (ulonglong)plVar8 & 0xffffffffffffff00;
+            }
+          }
+          if ((-1 < iVar6) && (iVar6 < iVar4)) goto LAB_1803c563b;
+        }
+      }
+      goto LAB_1803c5848;
+    }
+    plVar8 = FUN_1804d7940();
+    if ((plVar11 == plVar8) &&
+       (plVar8 = (longlong *)FUN_1805bbd90((longlong)plVar13,1), (char)plVar8 != '\0'))
+    goto LAB_1803c5848;
+    uVar7 = FUN_1805bbd90((longlong)plVar13,3);
+    if (((char)uVar7 != '\0') &&
+       (cVar2 = (**(code **)(*(longlong *)(param_1 + -8) + 0x750))(param_1 + -8), cVar2 == '\0')) {
+      plVar8 = FUN_1804d7940();
+      if ((*(char *)(param_1 + 0xea8) == '\0') || (plVar8 == (longlong *)0x0)) goto LAB_1803c5848;
+      iVar4 = (**(code **)(*plVar8 + 0x250))(plVar8);
+      if ((*(char *)((longlong)plVar8 + 0x23fa) != '\0') &&
+         (uVar1 = *(uint *)((longlong)plVar8 + 0x23bc), uVar1 != 0)) {
+        if (uVar1 == 0xffffffff) {
+          uVar7 = 0x1fff;
+        }
+        else {
+          uVar7 = (ulonglong)(uVar1 & 0xffff);
+        }
+        plVar8 = (longlong *)(PTR_DAT_180fda328 + uVar7 * 0x20 + 8);
+        if (((plVar8 != (longlong *)0x0) && (*(uint *)(plVar8 + 1) == uVar1 >> 0x10)) &&
+           (*plVar8 != 0)) {
+          if (uVar1 != 0xffffffff) {
+            uVar12 = uVar1 & 0xffff;
+          }
+          puVar9 = (undefined8 *)(PTR_DAT_180fda328 + (ulonglong)uVar12 * 0x20 + 8);
+          if ((puVar9 == (undefined8 *)0x0) || (*(uint *)(puVar9 + 1) != uVar1 >> 0x10)) {
+            plVar8 = (longlong *)0x0;
+          }
+          else {
+            plVar8 = (longlong *)*puVar9;
+          }
+          iVar4 = (**(code **)(*plVar8 + 0x250))(plVar8);
+        }
+      }
+      plVar8 = (longlong *)(**(code **)(*plVar11 + 0x250))(plVar11);
+      iVar5 = (int)plVar8;
+      iVar6 = 3;
+      if ((iVar5 != 2) && (iVar6 = iVar5, iVar5 == 3)) {
+        iVar6 = 2;
+      }
+      if (iVar6 != iVar4) goto LAB_1803c5848;
+      uVar7 = FUN_1805bbd90((longlong)plVar13,0x31);
+      if (((char)uVar7 == '\0') && (*(int *)((longlong)plVar11 + 0x1fbc) == 8)) {
+        iVar6 = FUN_1805ba880((longlong)plVar13);
+        plVar8 = (longlong *)CONCAT44(extraout_var,iVar6);
+        if (iVar6 == iVar4) goto LAB_1803c5848;
+      }
+      goto LAB_1803c563b;
+    }
+  }
+  uVar1 = *(uint *)(param_1 + 0xeac);
+  if (uVar1 != 0) {
+    if (uVar1 != 0xffffffff) {
+      uVar12 = uVar1 & 0xffff;
+    }
+    plVar13 = (longlong *)(PTR_DAT_180fda328 + (ulonglong)uVar12 * 0x20 + 8);
+    if ((((plVar13 != (longlong *)0x0) && (*(uint *)(plVar13 + 1) == uVar1 >> 0x10)) &&
+        (plVar13 = (longlong *)*plVar13, plVar13 != (longlong *)0x0)) &&
+       ((((plVar11 != (longlong *)0x0 &&
+          (plVar8 = (longlong *)(**(code **)(*plVar11 + 0x720))(plVar11), plVar8 != plVar13)) ||
+         ((plVar8 = (longlong *)(**(code **)(*(longlong *)(param_1 + -8) + 0x750))(param_1 + -8),
+          (char)plVar8 == '\0' &&
+          (plVar8 = (longlong *)(**(code **)(plVar13[1] + 0x18))(plVar13 + 1), (char)plVar8 == '\0 ')
+          ))) || (*(char *)((longlong)plVar13 + 0x1084) != '\0')))) {
+LAB_1803c5848:
+      return (ulonglong)plVar8 & 0xffffffffffffff00;
+    }
+  }
+LAB_1803c563b:
+  uVar7 = FUN_1803b5a80(param_1);
+  return uVar7;
+}
